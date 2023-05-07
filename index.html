@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>დასაწყობება</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+		*{
+			box-sizing: border-box;
+		}
+		@media only screen and (max-width: 600px) {
+			body {
+				/*background-color: lightblue;*/
+			}
+		}
+		
+		</style>
+		
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+}
+header{
+	background-color: green;
+	color: white;
+	height: 100px;
+	text-align: center;
+	padding-top: 10px;
+}
+footer{
+	background-color: green;
+	color: white;
+	height: 70px;
+	text-align: center;
+	padding-top: 10px;
+}
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+  width: 50%;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 48%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+#Note{
+	font-size: 20px;
+	color: red;
+	font-weight: bold;
+}
+table{
+	border-collapse: collapse;
+}
+</style>	
+	</head>
+	<body>
+	<header>
+		<h2>მაღაზია "მაგნიტი"<br>დასაწყობება</h2>
+	</header>
+	  <!--<i class="fa fa-shopping-cart" style="font-size:10em;color:green;"></i>-->
+	  <i class="fa fa-truck" style="font-size:96px;color:blue;"></i>
+	  <table border='1' id="produqtebis_sia">
+	  
+	  </table>
+	  <form id="Salaro">
+	  <div class="container">
+		
+		<hr>
+
+		<label for="PructName"><b>პროდუქტის დასახელება</b></label>
+		<input type="text" placeholder="პროდუქტის დასახელება" name="PructName" id="PructName">
+
+		<label for="price"><b>ღირებულება</b></label>
+		<input type="text" placeholder="ღირებულება" name="price" id="price" ><br>
+
+		<label for="z_erTeuli"><b>ზომს ერთეული</b></label>
+		<!--<input type="text" placeholder="ზომს ერთეული" name="z_erTeuli" id="z_erTeuli" >-->
+		<select name="z_erTeuli" id="z_erTeuli">
+			<option></option>
+			<option>კგ</option>
+			<option>ცალი</option>
+			<option>ბოთლი</option>
+			<option>ლიტრი</option>
+			<option>შეფუთვა</option>
+			<option>ყუთი</option>
+			<option>ღერი</option>
+		</select><br><br>
+		
+		<label for="NUM"><b>რაოდენობა</b></label>
+		<input type="number" name="NUM" id="NUM" value="1">
+		
+		<hr>
+		<p id="Note"></p>
+		<button type="button" onclick="salaro();" class="registerbtn">მიღება</button>
+		
+		<button type="button" onclick="qviTari();" class="registerbtn" style="background-color: red;">მთლიანი ღირებულება</button>
+	
+		<!--<button type="reset" class="registerbtn" style="background-color: red;">წაშლა</button>-->
+	  </div>
+	  
+	</form>
+	  <script>
+	    class Product{
+		  constructor(Name,Price,Number,Zoma){
+		    this.Name   = Name;
+			this.Price  = Price;
+			this.Number = Number;
+			this.Zoma   = Zoma;
+		  }
+		  PropertiesConcat(n,p,N,z){
+		    return this.Name + " " + this.Price + " " + this.Number+ " " + this.Zoma; 
+		  }
+		}
+		
+		var Prodacts = [];
+		document.getElementById("produqtebis_sia").innerHTML = 
+		  "<tr>"
+			 +"<th>პროდუქტი</th><th>ფასი</th><th>ზომის ერთეული</th><th>რაოდენობა</th><th>თანხა</th>"
+		+ "</tr>";
+		var Sum = 0; // Sum - კალათაში პროდუქტების ღირებულებათა ჯამი
+		function salaro(){
+		  var N = 0; // N - კალათში პროდუქტების რაოდენობა
+		  document.getElementById("Note").innerHTML = "";
+		  //if(document.getElementById("PructName").value == ""){
+		  if(document.getElementById("PructName").value.length == 0){
+			document.getElementById("Note").innerHTML = "გთხოვთ შემოიტანოთ პროდუქტის დასახელება";
+		  }
+		  else
+		  if( document.getElementById("price").value.length == 0 ){
+		    document.getElementById("Note").innerHTML = "გთხოვთ შემოიტანოთ პროდუქტის ღირებულება";
+		  }
+		  else
+		  if( document.getElementById("z_erTeuli").selectedIndex == 0 ){
+		    document.getElementById("Note").innerHTML = "გთხოვთ მიუთითოთ ზომის ერთეული";
+		  }
+		  else
+		  if( N >= 0){
+		    Prodacts[N] = new Product(
+						 document.getElementById("PructName").value
+						,document.getElementById("price").value
+						,document.getElementById("NUM").value
+						,document.getElementById("z_erTeuli").value
+			);
+			console.log("Prodacts[" + N + "] = " +  Prodacts);
+			Sum = Sum + Prodacts[N].Price * Prodacts[N].Number;
+			Sum = Math.round(Sum * 100)/100;
+			console.log(Prodacts[N].PropertiesConcat(document.getElementById("PructName").value
+						,document.getElementById("price").value
+						,document.getElementById("NUM").value) + "Sum = " + Sum);
+			var Tanxa = Prodacts[N].Price * Prodacts[N].Number;
+			document.getElementById("produqtebis_sia").innerHTML = 
+			document.getElementById("produqtebis_sia").innerHTML
+		     + "<tr>"
+				 + "<td>" + Prodacts[N].Name + "</td>" 
+				 + "<td align='right'>" + Prodacts[N].Price  + "</td>"
+				 + "<td align='right'>" + Prodacts[N].Zoma  + "</td>"
+				 + "<td align='right'>" + Prodacts[N].Number  + "</td>"
+				 + "<td align='right'>" + Math.round(Tanxa * 100)/100 +"</td>"
+		     + "</tr>";
+			
+			document.getElementById("Salaro").reset();
+		  }
+		}
+	  
+	  function qviTari(){
+	    document.getElementById("produqtebis_sia").innerHTML = 
+			document.getElementById("produqtebis_sia").innerHTML
+		     + "<tr>"
+				 + "<td colspan='4' align='right'>სულ:</td>"
+				 + "<td align='right'>" + Sum +"</td>"
+		     + "</tr>"; 
+	  }
+	  </script>
+	  <footer><h3>ყველა უფლება დაცულია &copy; 2023</h3></footer>
+	</body>
+</html>
